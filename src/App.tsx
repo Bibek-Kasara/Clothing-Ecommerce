@@ -14,14 +14,16 @@ import { SearchPage } from '@/pages/search';
 import { DashboardPage } from '@/pages/dashboard';
 import { OrdersPage } from '@/pages/orders';
 import { ContactPage } from '@/pages/contact';
-import NotFoundPage from '@/pages/not-found';               // <-- ADD
+import NotFoundPage from '@/pages/not-found'; // <-- ADD
 import { AppErrorBoundary } from '@/components/layout/app-error-boundary'; // <-- ADD
+import ScrollToTop from '@/components/scroll-to-top'; // <-- Import the ScrollToTop component
 import './index.css';
 
+// Set up react-query client for handling API calls
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000,
+      staleTime: 5 * 60 * 1000, // 5 minutes
       refetchOnWindowFocus: false,
     },
   },
@@ -33,6 +35,10 @@ function App() {
       <Router>
         <div className="min-h-screen flex flex-col">
           <SiteHeader />
+          
+          {/* ScrollToTop Component to reset scroll on route change */}
+          <ScrollToTop />
+          
           <main className="flex-1">
             {/* Wrap all routes in the error boundary */}
             <AppErrorBoundary>
@@ -47,12 +53,13 @@ function App() {
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
                 <Route path="/contact" element={<ContactPage />} />
-
-                {/* Catch-all 404 */}
+                
+                {/* Catch-all 404 route */}
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </AppErrorBoundary>
           </main>
+          
           <SiteFooter />
           <CartDrawer />
           <Toaster />

@@ -12,39 +12,43 @@ export default function ScrollToTop() {
   const { pathname, hash } = useLocation();
 
   useLayoutEffect(() => {
+    // Disable the browser's native scroll restoration behavior
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
 
+    // Function to handle the scroll reset
     const reset = () => {
-      // If navigating to a hash, scroll to that element instead.
+      // If navigating to a hash, scroll to that element instead
       if (hash) {
         const el = document.querySelector(hash);
         if (el) {
-          el.scrollIntoView({ block: "start", inline: "nearest", behavior: "auto" });
+          el.scrollIntoView({ block: "start", inline: "nearest", behavior: "smooth" });
           return;
         }
       }
 
-      // Window/document
+      // Scroll to the top of the window/document
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
 
-      // Optional custom scroll container
+      // Optional: If you have a custom scroll container, scroll it to the top
       const scroller = document.getElementById("app-scroll");
       if (scroller) scroller.scrollTo(0, 0);
     };
 
-    // Run immediately, on next tick, and on next frame.
+    // Reset immediately, on the next tick, and on the next frame to handle layout shifts
     reset();
     const t = setTimeout(reset, 0);
     const r = requestAnimationFrame(reset);
+
+    // Cleanup timeout and animation frame on component unmount
     return () => {
       clearTimeout(t);
       cancelAnimationFrame(r);
     };
-  }, [pathname, hash]);
+  }, [pathname, hash]); // Run when either pathname or hash changes
 
   return null;
 }
