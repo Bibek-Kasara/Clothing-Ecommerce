@@ -58,8 +58,12 @@ npm i @radix-ui/react-tooltip
 
 Make sure to set up your environment variables for the project. Create a .env file in the root of your project and include any necessary configuration, like API keys, URLs, and other sensitive data. Example:
 
-VITE_API_URL=https://your-api-url.com
-VITE_USD_TO_NPR=133
+VITE_USD_TO_NPR=133  # The exchange rate for USD to NPR
+VITE_ESEWA_MERCHANT_ID=your_merchant_id
+VITE_ESEWA_SIGNATURE_KEY=your_signature_key
+VITE_CLERK_FRONTEND_API=https://your-clerk-front-end-api-url.clerk.dev
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_dGVhY2hpbmctamVubmV0LTQuY2xlcmsuYWNjb3VudHMuZGV2JA
+
 
 5. Run the Application
 
@@ -69,3 +73,4 @@ npm run dev
 
 
 This will start the development server and you can view the app in your browser at http://localhost:5173.
+
